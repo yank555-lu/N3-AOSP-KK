@@ -84,7 +84,7 @@ static struct mipi_samsung_driver_data *mdnie_msd;
 #define INPUT_PAYLOAD2(x) PAYLOAD2.payload = x
 
 #if defined(CONFIG_MDNIE_LITE_CONTROL)
-int hijack = HIJACK_ENABLED;
+int hijack = HIJACK_DISABLED; /* By default, do not enable hijacking */
 int curve = 0;
 int black = 0;
 int black_r = 0;
