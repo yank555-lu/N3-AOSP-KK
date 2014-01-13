@@ -63,6 +63,7 @@
 #endif
 
 #ifdef CONFIG_MDNIE_LITE_CONTROL
+#define MDNIE_VERSION "1.0a by Yank555.lu"
 #define HIJACK_DISABLED	0
 #define HIJACK_ENABLED	1
 #endif

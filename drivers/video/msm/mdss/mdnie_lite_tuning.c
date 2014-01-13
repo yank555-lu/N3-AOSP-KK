@@ -1346,12 +1346,12 @@ static ssize_t yellow_blue_store(struct device * dev, struct device_attribute * 
 
 /* black */
 
-static ssize_t black_show(struct device *dev, struct device_attribute *attr, char *buf)
+static ssize_t black_crush_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	return sprintf(buf, "%d\n", black);
 }
 
-static ssize_t black_store(struct device * dev, struct device_attribute * attr, const char * buf, size_t size)
+static ssize_t black_crush_store(struct device * dev, struct device_attribute * attr, const char * buf, size_t size)
 {
 	int new_val;
 	sscanf(buf, "%d", &new_val);
@@ -1523,7 +1523,7 @@ static DEVICE_ATTR(blue_blue, 0664, blue_blue_show, blue_blue_store);
 static DEVICE_ATTR(yellow_red, 0664, yellow_red_show, yellow_red_store);
 static DEVICE_ATTR(yellow_green, 0664, yellow_green_show, yellow_green_store);
 static DEVICE_ATTR(yellow_blue, 0664, yellow_blue_show, yellow_blue_store);
-static DEVICE_ATTR(black, 0664, black_show, black_store);
+static DEVICE_ATTR(black, 0664, black_crush_show, black_crush_store);
 static DEVICE_ATTR(black_red, 0664, black_red_show, black_red_store);
 static DEVICE_ATTR(black_green, 0664, black_green_show, black_green_store);
 static DEVICE_ATTR(black_blue, 0664, black_blue_show, black_blue_store);
@@ -1776,6 +1776,232 @@ static DEVICE_ATTR(accessibility, 0664,
 			accessibility_show,
 			accessibility_store);
 
+/* -------------------------------------------------------
+ * Add whathub's new interface
+ * 
+ * NB: Current interface is kept as more app friendly.
+ * 
+ * (Yank555.lu)
+ * ------------------------------------------------------- */
+#if defined(CONFIG_MDNIE_LITE_CONTROL)
+/* red */
+
+static ssize_t red_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[19], LITE_CONTROL_2[21], LITE_CONTROL_2[23]);
+}
+
+static ssize_t red_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[19] || green != LITE_CONTROL_2[21] || blue != LITE_CONTROL_2[23]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[RED] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[19] = red;
+		LITE_CONTROL_2[21] = green;
+		LITE_CONTROL_2[23] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* green */
+
+static ssize_t green_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[25], LITE_CONTROL_2[27], LITE_CONTROL_2[29]);
+}
+
+static ssize_t green_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[25] || green != LITE_CONTROL_2[27] || blue != LITE_CONTROL_2[29]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[GREEN] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[25] = red;
+		LITE_CONTROL_2[27] = green;
+		LITE_CONTROL_2[29] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* blue */
+
+static ssize_t blue_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[31], LITE_CONTROL_2[33], LITE_CONTROL_2[35]);
+}
+
+static ssize_t blue_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[31] || green != LITE_CONTROL_2[33] || blue != LITE_CONTROL_2[35]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[BLUE] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[31] = red;
+		LITE_CONTROL_2[33] = green;
+		LITE_CONTROL_2[35] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* cyan */
+
+static ssize_t cyan_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[18], LITE_CONTROL_2[20], LITE_CONTROL_2[22]);
+}
+
+static ssize_t cyan_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[18] || green != LITE_CONTROL_2[20] || blue != LITE_CONTROL_2[22]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[CYAN] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[18] = red;
+		LITE_CONTROL_2[20] = green;
+		LITE_CONTROL_2[22] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* magenta */
+
+static ssize_t magenta_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[24], LITE_CONTROL_2[26], LITE_CONTROL_2[28]);
+}
+
+static ssize_t magenta_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[24] || green != LITE_CONTROL_2[26] || blue != LITE_CONTROL_2[28]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[MAGENTA] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[24] = red;
+		LITE_CONTROL_2[26] = green;
+		LITE_CONTROL_2[28] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* yellow */
+
+static ssize_t yellow_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[30], LITE_CONTROL_2[32], LITE_CONTROL_2[34]);
+}
+
+static ssize_t yellow_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[30] || green != LITE_CONTROL_2[32] || blue != LITE_CONTROL_2[34]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[YELLOW] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[30] = red;
+		LITE_CONTROL_2[32] = green;
+		LITE_CONTROL_2[34] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* white */
+
+static ssize_t white_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[36], LITE_CONTROL_2[38], LITE_CONTROL_2[40]);
+}
+
+static ssize_t white_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[36] || green != LITE_CONTROL_2[38] || blue != LITE_CONTROL_2[40]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[WHITE] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[36] = red;
+		LITE_CONTROL_2[38] = green;
+		LITE_CONTROL_2[40] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+/* black */
+
+static ssize_t black_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+    return sprintf(buf, "%d %d %d\n", LITE_CONTROL_2[37], LITE_CONTROL_2[39], LITE_CONTROL_2[41]);
+}
+
+static ssize_t black_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+    int red, green, blue;
+	sscanf(buf, "%d %d %d", &red, &green, &blue);
+
+	if (red != LITE_CONTROL_2[37] || green != LITE_CONTROL_2[39] || blue != LITE_CONTROL_2[41]) {
+		if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+			return -EINVAL;
+		DPRINT("[BLACK] (red: %d) (green: %d) (blue: %d)\n", red, green, blue);
+		LITE_CONTROL_2[37] = red;
+		LITE_CONTROL_2[39] = green;
+		LITE_CONTROL_2[41] = blue;
+		if (hijack == HIJACK_ENABLED)
+			mDNIe_Set_Mode(mdnie_tun_state.scenario);
+	}
+    return size;
+}
+
+static ssize_t version_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+        return sprintf(buf, "%s\n", MDNIE_VERSION);
+}
+
+static DEVICE_ATTR(control_override, 0664, hijack_show, hijack_store);
+static DEVICE_ATTR(control_sharpen, 0664, sharpen_show, sharpen_store);
+static DEVICE_ATTR(control_red, 0664, red_show, red_store);
+static DEVICE_ATTR(control_green, 0664, green_show, green_store);
+static DEVICE_ATTR(control_blue, 0664, blue_show, blue_store);
+static DEVICE_ATTR(control_cyan, 0664, cyan_show, cyan_store);
+static DEVICE_ATTR(control_magenta, 0664, magenta_show, magenta_store);
+static DEVICE_ATTR(control_yellow, 0664, yellow_show, yellow_store);
+static DEVICE_ATTR(control_white, 0664, white_show, white_store);
+static DEVICE_ATTR(control_black, 0664, black_show, black_store);
+static DEVICE_ATTR(control_version, 0444, version_show, NULL);
+#endif
+
 static struct class *mdnie_class;
 struct device *tune_mdnie_dev;
 
@@ -1865,6 +2091,24 @@ void init_mdnie_class(void)
 	device_create_file(tune_mdnie_dev, &dev_attr_white_red);
 	device_create_file(tune_mdnie_dev, &dev_attr_white_green);
 	device_create_file(tune_mdnie_dev, &dev_attr_white_blue);
+	/* -------------------------------------------------------
+	 * Add whathub's new interface
+	 * 
+	 * NB: Current interface is kept as more app friendly.
+	 * 
+	 * (Yank555.lu)
+	 * ------------------------------------------------------- */
+	device_create_file(tune_mdnie_dev, &dev_attr_control_override);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_sharpen);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_red);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_green);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_blue);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_cyan);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_magenta);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_yellow);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_white);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_black);
+	device_create_file(tune_mdnie_dev, &dev_attr_control_version);
 #endif
 
 	mdnie_tun_state.mdnie_enable = true;
