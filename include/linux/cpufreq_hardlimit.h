@@ -15,13 +15,17 @@
 #ifndef _LINUX_CPUFREQ_HARDLIMIT_H
 #define _LINUX_CPUFREQ_HARDLIMIT_H
 
-#define CPUFREQ_HARDLIMIT_VERSION "v1.1 by Yank555.lu"
+#define CPUFREQ_HARDLIMIT_VERSION "v1.2 by Yank555.lu"
 
-extern unsigned int cpufreq_hardlimit;
+#define CPUFREQ_HARDLIMIT_MAX_SCREEN_ON_STOCK  2265600	/* default */
+#define CPUFREQ_HARDLIMIT_MAX_SCREEN_OFF_STOCK 2265600	/* default */
 
-#define CPUFREQ_HARDLIMIT_STOCK 2265600	/* default */
+#define CPUFREQ_HARDLIMIT_SCREEN_ON	0		/* default, consider we boot with screen on */
+#define CPUFREQ_HARDLIMIT_SCREEN_OFF	1
 
 unsigned int check_cpufreq_hardlimit(unsigned int freq);
+
+void update_scaling_max(unsigned int freq);		/* Hook in cpufreq */
 
 #endif
 

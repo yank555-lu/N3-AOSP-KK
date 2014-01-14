@@ -333,6 +333,21 @@ void cpufreq_notify_utilization(struct cpufreq_policy *policy,
 
 }
 
+/* Yank555.lu : CPU Hardlimit - Hook to force scaling_max_freq to be updated on Hardlimit change */
+#ifdef CONFIG_CPUFREQ_HARDLIMIT
+extern void update_scaling_max(unsigned int freq)
+{
+	int cpu;
+	struct cpufreq_policy *policy;
+
+	for_each_possible_cpu(cpu) {
+		policy = cpufreq_cpu_get(cpu);
+		if (policy != NULL)
+			policy->user_policy.max = policy->max = freq;
+	}
+}
+#endif
+
 /*********************************************************************
  *                          SYSFS INTERFACE                          *
  *********************************************************************/
