@@ -56,7 +56,6 @@ void end_swap_bio_write(struct bio *bio, int err)
 {
 	const int uptodate = test_bit(BIO_UPTODATE, &bio->bi_flags);
 	struct page *page = bio->bi_io_vec[0].bv_page;
-	static unsigned long swap_error_rs_time;
 
 	if (!uptodate) {
 		SetPageError(page);
