@@ -1397,11 +1397,14 @@ static int wacom_i2c_remove(struct i2c_client *client)
 	cancel_delayed_work_sync(&wac_i2c->boot_done_work);
 #endif
 	cancel_delayed_work_sync(&wac_i2c->pen_insert_dwork);
+#ifdef WACOM_BOOSTER
 	cancel_delayed_work_sync(&wac_i2c->work_dvfs_off);
 	cancel_delayed_work_sync(&wac_i2c->work_dvfs_chg);
-
+#endif
 	mutex_destroy(&wac_i2c->lock);
+#ifdef WACOM_BOOSTER
 	mutex_destroy(&wac_i2c->dvfs_lock);
+#endif
 
 	sysfs_remove_group(&wac_i2c->dev->kobj, &epen_attr_group);
 
@@ -1753,11 +1756,15 @@ err_input_allocate_device:
 	cancel_delayed_work_sync(&wac_i2c->boot_done_work);
 #endif
 	cancel_delayed_work_sync(&wac_i2c->pen_insert_dwork);
+#ifdef WACOM_BOOSTER
 	cancel_delayed_work_sync(&wac_i2c->work_dvfs_off);
 	cancel_delayed_work_sync(&wac_i2c->work_dvfs_chg);
+#endif
 	wac_i2c->wac_pdata->wacom_stop(wac_i2c);
 	mutex_destroy(&wac_i2c->lock);
+#ifdef WACOM_BOOSTER
 	mutex_destroy(&wac_i2c->dvfs_lock);
+#endif
 err_wacom_i2c_bootloader_ver:
 #ifdef CONFIG_SEC_H_PROJECT
  err_wacom_i2c_send_timeout:
