@@ -37,6 +37,10 @@
 
 #include "acpuclock.h"
 
+#ifdef CONFIG_CPUFREQ_HARDLIMIT
+#include <linux/cpufreq_hardlimit.h>
+#endif
+
 #ifdef CONFIG_DEBUG_FS
 #include <linux/debugfs.h>
 #include <linux/seq_file.h>
@@ -126,7 +130,11 @@ void set_max_lock(int freq)
 
 int get_max_freq(void)
 {
+#ifdef CONFIG_CPUFREQ_HARDLIMIT
+	return check_cpufreq_hardlimit(cpuinfo_max_freq); /* Yank555.lu : Enforce hardlimit */
+#else
 	return cpuinfo_max_freq;
+#endif
 }
 
 int get_min_freq(void)
