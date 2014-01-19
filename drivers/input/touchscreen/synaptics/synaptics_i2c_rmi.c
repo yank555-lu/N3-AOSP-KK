@@ -1968,7 +1968,7 @@ static int synaptics_rmi4_f12_abs_report(struct synaptics_rmi4_data *rmi4_data,
 
 #ifdef CONFIG_TOUCH_WAKE
 	// Read touchscreen digitizer
-	if (touchwake_active() && touch_count > 0) {
+	if (touchwake_is_active() && touch_count > 0) {
 		if (previous_touch_state == false) {
 			#ifdef TOUCHWAKE_DEBUG_PRINT
 			pr_info("[TOUCHWAKE] Synaptics pressed\n");
@@ -5265,7 +5265,7 @@ static int synaptics_rmi4_suspend(struct device *dev)
 
 #ifdef CONFIG_TOUCH_WAKE
 	// Don't change state if touchwake listening delay is active
-	if (!touchwake_active()) {
+	if (!touchwake_is_active()) {
 		#ifdef TOUCHWAKE_DEBUG_PRINT
 		pr_info("[TOUCHWAKE] Synaptics suspend\n");
 		#endif
@@ -5308,7 +5308,7 @@ static int synaptics_rmi4_resume(struct device *dev)
 
 #ifdef CONFIG_TOUCH_WAKE
 	// Don't change state if touchwake listening delay is active
-	if (!touchwake_active()) {
+	if (!touchwake_is_active()) {
 		#ifdef TOUCHWAKE_DEBUG_PRINT
 		pr_info("[TOUCHWAKE] Synaptics resume\n");
 		#endif
