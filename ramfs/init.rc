@@ -33,6 +33,10 @@ on early-init
 
 on init
 
+# Yank555.lu : Set SELinux to permissive
+setenforce 0
+setprop ro.boot.selinux 0
+
 sysclktz 0
 
 loglevel 3
