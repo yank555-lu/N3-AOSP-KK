@@ -15,6 +15,9 @@
  *
  * v1.2 : make wakelock use sysfs-switchable
  *
+ * v1.3 : fix for CM11 kernel (synaptics is disabled, so we need to handle enabling /
+ *                             disabling it it just like the wacom digitizer)
+ *
  * --------------------------------------------------------------------------------------
  *
  * Base idea by Ezekeel
@@ -139,7 +142,7 @@ static void touchwake_suspend(struct power_suspend * h)
 				#ifdef TOUCHWAKE_DEBUG_PRINT
 				pr_info("[TOUCHWAKE] Suspend - enable touch delay\n");
 				#endif
-				touchscreen_pen_enable(); // Wacom needs to be reactivated
+				touchwake_enable_touch(); // Digitizers need to be reactivated
 				touchwake_active = true; // Keep digitizers awake for now
 				if (use_wakelock)
 					wake_lock(&touchwake_wake_lock);
@@ -156,7 +159,7 @@ static void touchwake_suspend(struct power_suspend * h)
 				#ifdef TOUCHWAKE_DEBUG_PRINT
 				pr_info("[TOUCHWAKE] Suspend - keep touch enabled indefinately\n");
 				#endif
-				touchscreen_pen_enable(); // Wacom needs to be reactivated
+				touchwake_enable_touch(); // Digitizers need to be reactivated
 				touchwake_active = true; // Keep digitizers awake for now
 				if (use_wakelock)
 					wake_lock(&touchwake_wake_lock);
